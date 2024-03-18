@@ -41,4 +41,12 @@ class ShoppingListController extends Controller
 
         return response()->json($shoppingList, 200);
     }
+
+    public function destroy($id)
+    {
+        $shoppingList =$this->shoppingList->find($id);
+        $shoppingList->delete();
+
+        return response()->json([], 204);
+    }
 }
