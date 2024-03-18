@@ -22,5 +22,12 @@ class ShoppingListController extends Controller
         $shoppingList = $this->shoppingList->find($id);
         return response()->json($shoppingList);
     }
+
+    public function store(Request $request)
+    {
+        $shoppingList = $this->shoppingList->create($request->all());
+        return response()->json($shoppingList, 201);
+    }
+
     
 }
