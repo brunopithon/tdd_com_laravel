@@ -43,8 +43,32 @@ class ShoppingListControllerTest extends TestCase
         });
     }
 
+    public function test_get__single_shopping_list_endpoint(): void
+    {
+        $shoppingList = ShoppingList::factory(1)->createOne();
 
+        $response = $this->getJson('/api/shoppingList/' . $shoppingList->id);
 
+        // dd($response->baseResponse);
 
+        $response->assertStatus(200);
 
+        $response->assertJson(function (AssertableJson $json) use($shoppingList){
+            $json->hasAll(['id', 'name', 'description', 'created_at', 'updated_at']);
+
+            $json->whereAllType([
+                'id' => 'integer',
+                'name' => 'string',
+                'description' => 'string'
+            ]);            
+
+            $json->whereAll([
+                'id' => $shoppingList->id,
+                'name' => $shoppingList->name,
+                'description' => $shoppingList->description,
+            ]);
+        });
+    }
+
+    
 }
