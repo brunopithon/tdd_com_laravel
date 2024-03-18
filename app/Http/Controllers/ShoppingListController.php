@@ -29,5 +29,16 @@ class ShoppingListController extends Controller
         return response()->json($shoppingList, 201);
     }
 
-    
+    public function update(Request $request, $id)
+    {
+        $shoppingList = $this->shoppingList->find($id);
+
+        if (!$shoppingList) {
+            return response()->json(['message' => 'Shopping list not found.'], 404);
+        }
+
+        $shoppingList->update($request->all());
+
+        return response()->json($shoppingList, 200);
+    }
 }
