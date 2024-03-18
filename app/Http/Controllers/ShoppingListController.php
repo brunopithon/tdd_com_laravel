@@ -17,5 +17,10 @@ class ShoppingListController extends Controller
         return response()->json($this->shoppingList->all());
     }
 
- 
+    public function show($id)
+    {
+        $shoppingList = $this->shoppingList->find($id);
+        return response()->json($shoppingList);
+    }
+    
 }
