@@ -90,4 +90,30 @@ class ShoppingListControllerTest extends TestCase
 
     }
 
+    public function test_put_shopping_list_endpoint()
+    {
+
+        ShoppingList::factory(1)->createOne();
+
+        $shoppingList = [
+            'name' => 'Novo nome da lista de compras para atualizar',
+            'description' => 'Descrição da lista de compras para atualizar'
+        ];
+
+        $response = $this->putJson('/api/shoppingList/1', $shoppingList);
+
+        $response->assertStatus(200);
+
+        $response->assertJson(function (AssertableJson $json) use ($shoppingList){
+            $json->hasAll(['id', 'name', 'description', 'created_at', 'updated_at']);
+
+
+            $json->whereAll([
+                'name' => $shoppingList['name'],
+                'description' => $shoppingList['description'],
+            ])->etc();
+        });
+    }
+
+
 }
