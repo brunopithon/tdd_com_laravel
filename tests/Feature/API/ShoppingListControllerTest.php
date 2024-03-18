@@ -115,5 +115,15 @@ class ShoppingListControllerTest extends TestCase
         });
     }
 
+    public function test_delete_shopping_list_endpoint()
+    {
+        ShoppingList::factory(1)->createOne();
+
+        $response = $this->deleteJson('api/shoppingList/1');
+
+        $response->assertStatus(204);
+    }
+
+
 
 }
