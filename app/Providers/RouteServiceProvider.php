@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 
+/**
+ * @codeCoverageIgnore
+ */
+
 class RouteServiceProvider extends ServiceProvider
 {
     /**
