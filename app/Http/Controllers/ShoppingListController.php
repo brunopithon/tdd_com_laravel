@@ -7,46 +7,59 @@ use App\Models\ShoppingList;
 
 class ShoppingListController extends Controller
 {
-    public function __construct(private ShoppingList $shoppingList)
-    {
+  public function __construct(private ShoppingList $shoppingList)
+  {
 
+  }
+
+  public function showItems($shopping_list_id)
+  {
+    $shoppingList = $this->shoppingList->find($shopping_list_id);
+
+    if (!$shoppingList) {
+      return response()->json(['message' => 'Shopping list not found.'], 404);
     }
 
-    public function index()
-    {
-        return response()->json($this->shoppingList->all());
+    $items = $shoppingList->items;
+
+    return response()->json($items);
+  }
+
+  public function index()
+  {
+    return response()->json($this->shoppingList->all());
+  }
+
+  public function show($id)
+  {
+    $shoppingList = $this->shoppingList->find($id);
+    return response()->json($shoppingList);
+  }
+
+  public function store(Request $request)
+  {
+    $shoppingList = $this->shoppingList->create($request->all());
+    return response()->json($shoppingList, 201);
+  }
+
+  public function update(Request $request, $id)
+  {
+    $shoppingList = $this->shoppingList->find($id);
+
+    if (!$shoppingList) {
+      return response()->json(['message' => 'Shopping list not found.'], 404);
     }
 
-    public function show($id)
-    {
-        $shoppingList = $this->shoppingList->find($id);
-        return response()->json($shoppingList);
-    }
+    $shoppingList->update($request->all());
 
-    public function store(Request $request)
-    {
-        $shoppingList = $this->shoppingList->create($request->all());
-        return response()->json($shoppingList, 201);
-    }
+    return response()->json($shoppingList, 200);
+  }
 
-    public function update(Request $request, $id)
-    {
-        $shoppingList = $this->shoppingList->find($id);
+  public function destroy($id)
+  {
+    $shoppingList =$this->shoppingList->find($id);
+    $shoppingList->delete();
 
-        if (!$shoppingList) {
-            return response()->json(['message' => 'Shopping list not found.'], 404);
-        }
-
-        $shoppingList->update($request->all());
-
-        return response()->json($shoppingList, 200);
-    }
-
-    public function destroy($id)
-    {
-        $shoppingList =$this->shoppingList->find($id);
-        $shoppingList->delete();
-
-        return response()->json([], 204);
-    }
+    return response()->json([], 204);
+  }
 }

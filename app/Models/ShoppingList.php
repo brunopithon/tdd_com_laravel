@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShoppingList extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'description'
-    ];
+  protected $fillable = [
+    'name',
+    'description'
+  ];
+
+  public function items()
+  {
+    return $this->hasMany(Item::class);
+  }
 }
