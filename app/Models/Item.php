@@ -7,5 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
 {
-    use HasFactory;
+  use HasFactory;
+
+  protected $fillable = [
+    'shopping_list_id',
+    'name',
+    'quantity',
+    'purchased',
+  ];
+
+  public function shoppingList()
+  {
+    return $this->belongsTo(ShoppingList::class);
+  }
 }
