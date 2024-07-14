@@ -4,6 +4,7 @@ use App\Models\ShoppingList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShoppingListController;
+use App\Http\Controllers\ItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,4 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('shoppingList', ShoppingListController::class);
+Route::get('showItemsByShoppingList/{shopping_list_id}', [ShoppingListController::class, 'showItems']);
 
+
+Route::get('items', [ItemController::class, 'index']);
+Route::post('item', [ItemController::class, 'store']);
+Route::get('item/{item_id}', [ItemController::class, 'show']);
+Route::put('item/{item_id}', [ItemController::class, 'update']);
+Route::delete('item/{item_id}', [ItemController::class, 'destroy']);
